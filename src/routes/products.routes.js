@@ -1,15 +1,15 @@
 import { Router } from "express";
-import crypyo from "crypto";
+import crypto from "crypto";
 
 const productRouter = Router();
 
 const products = [];
 
-app.get("/api/products", (req, res) => {
+productRouter.get("/", (req, res) => {
   res.status(200).send(products);
 });
 
-app.get("/api/products/:idP", (req, res) => {
+productRouter.get("/:idP", (req, res) => {
   const idProduct = req.params.idP;
   const product = products.find((prod) => prod.id == idProduct);
   if (product) {
@@ -19,10 +19,10 @@ app.get("/api/products/:idP", (req, res) => {
   }
 });
 
-app.post("/api/products", (req, res) => {
+productRouter.post("/", (req, res) => {
   const { title, description, code, price, status, stock, category } = req.body;
   const newproducts = {
-    id: crypyo.randomBytes(10).toString("hex"),
+    id: crypto.randomBytes(10).toString("hex"),
     title: title,
     description: description,
     code: code,
@@ -37,7 +37,7 @@ app.post("/api/products", (req, res) => {
   });
 });
 
-app.put("/api/products/:idP", (req, res) => {
+productRouter.put("/:idP", (req, res) => {
   const idProduct = req.params.idP;
   const { title, description, code, price, status, stock, category } = req.body;
   const index = products.findIndex((prod) => prod.id == idProduct);
@@ -55,7 +55,7 @@ app.put("/api/products/:idP", (req, res) => {
   }
 });
 
-app.delete("/api/products/:idP", (req, res) => {
+productRouter.delete("/:idP", (req, res) => {
   const idProduct = req.params.idP;
   const index = products.findIndex((prod) => prod.id == idProduct);
   if (index != -1) {
@@ -65,3 +65,5 @@ app.delete("/api/products/:idP", (req, res) => {
     res.status(404).send({ mensaje: "El producto no existe" });
   }
 });
+
+export default productRouter;
