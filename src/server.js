@@ -6,6 +6,7 @@ import { __dirname } from "./path.js";
 import productRouter from "./routes/products.routes.js";
 import cartRouter from "./routes/carts.routes.js";
 import multeRouter from "./routes/img.routes.js";
+import fs from "fs";
 
 const app = express();
 const hbs = create();
@@ -30,7 +31,17 @@ app.use("/api/carts", cartRouter);
 app.use("/upload", multeRouter);
 
 app.get("/", (req, res) => {
-  res.render("home", { message: "El Bodeguero" });
+  fs.readFile(
+    path.join(__dirname, "db", "products.json"),
+    "utf-8",
+    (err, data) => {
+      if (err) {
+        return res.status(500).send("Error al leer el archivo de productos");
+      }
+      const products = JSON.parse(data);
+      res.render("products", { products });
+    }
+  );
 });
 
 io.on("connection", (socket) => {
