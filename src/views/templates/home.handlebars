@@ -1,0 +1,22 @@
+<h1>Bienvenido a El Bodeguero</h1>
+
+<h2>Lista de productos</h2>
+
+<div class="row">
+  {{#each productos}}
+    {{#if status}}
+      <div class="card text-center mb-3" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{title}}</h5>
+          <p class="card-text">Description: {{description}}</p>
+          <p class="card-text">Category: {{category}}</p>
+          <p class="card-text">Price: ${{price}}</p>
+          <p class="card-text">Stock: {{stock}} Unidades</p>
+          <button type="button" class="btn btn-dark"><font
+              style="vertical-align: inherit;"
+            ><font style="vertical-align: inherit;">Agregar al carrito</font></font></button>
+        </div>
+      </div>
+    {{/if}}
+  {{/each}}
+</div>
