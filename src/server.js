@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import { create } from "express-handlebars";
 import { Server } from "socket.io";
 import path from "path";
@@ -15,6 +16,13 @@ const PORT = 8080;
 const server = app.listen(PORT, () => {
   console.log("Server on port", PORT);
 });
+
+await mongoose
+  .connect(
+    "mongodb+srv://sarmientoemmanuel02:tX7xMogifZvxKefn@cluster0.zbbys.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+  )
+  .then(() => console.log("BBD conectado"))
+  .catch((e) => console.log("Error al conectar bbd:", e));
 
 const io = new Server(server);
 
